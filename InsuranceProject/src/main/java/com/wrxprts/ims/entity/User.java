@@ -1,7 +1,8 @@
 package com.wrxprts.ims.entity;
 
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -43,31 +44,39 @@ public class User
 	@Column(name = "UserProvince", length = 13)
 	private String province;
 	
+	@Column(name = "UserEmail", unique = true)
+	private String email;
+	
 	@Column(name = "UserTC", columnDefinition = "char(11)")
 	private String tc;
 	
-	@Column(name = "UserPassword", length = 40)
+	@Column(name = "UserPassword")
 	private String password;
 	
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "UserID"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "UserID"))
-	private Collection<Role> roles;
+	@JoinTable(name = "TBLUSERROLES", joinColumns = @JoinColumn(name = "UserID", referencedColumnName = "UserID"), inverseJoinColumns = @JoinColumn(name = "RoleID", referencedColumnName = "RoleID"))
+	private List<Role> roles = new ArrayList<>();
+	
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(name = "TBLUSERCARS", joinColumns = @JoinColumn(name = "UserID", referencedColumnName = "UserID"), inverseJoinColumns = @JoinColumn(name = "CarID", referencedColumnName = "CarID"))
+	private List<Car> cars = new ArrayList<>();
 	
 	public User()
 	{
 		
 	}
 	
-	public User(String tc, String password, Collection<Role> roles)
+	public User(String tc, String email, String password, List<Role> roles)
 	{
 		super();
 		this.tc = tc;
+		this.email = email;
 		this.password = password;
 		this.roles = roles;
 	}
 	
-	public User(String name, String surname, Date b_date, String province, String tc, String password,
-			Collection<Role> roles)
+	public User(String name, String surname, Date b_date, String province, String tc, String email, String password,
+			List<Role> roles, List<Car> cars)
 	{
 		super();
 		this.name = name;
@@ -75,8 +84,10 @@ public class User
 		this.b_date = b_date;
 		this.province = province;
 		this.tc = tc;
+		this.email = email;
 		this.password = password;
 		this.roles = roles;
+		this.cars = cars;
 	}
 	
 	public Long getId()
@@ -139,6 +150,16 @@ public class User
 		this.tc = tc;
 	}
 	
+	public String getEmail()
+	{
+		return email;
+	}
+	
+	public void setEmail(String email)
+	{
+		this.email = email;
+	}
+	
 	public String getPassword()
 	{
 		return password;
@@ -149,14 +170,24 @@ public class User
 		this.password = password;
 	}
 	
-	public Collection<Role> getRoles()
+	public List<Role> getRoles()
 	{
 		return roles;
 	}
 	
-	public void setRoles(Collection<Role> roles)
+	public void setRoles(List<Role> roles)
 	{
 		this.roles = roles;
+	}
+	
+	public List<Car> getCars()
+	{
+		return cars;
+	}
+	
+	public void setCars(List<Car> cars)
+	{
+		this.cars = cars;
 	}
 	
 }

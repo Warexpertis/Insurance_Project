@@ -13,7 +13,7 @@
 <!-- create navigation bar -->
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Insurance Management System</a>
+    <a class="navbar-brand" th:href="@{/}">Insurance Management System</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -32,34 +32,40 @@
 	<div class = "row">
 		<div class = "col-md-6 col-md-offset-3 container justify-content-center card">
 			
-				<!-- success message -->
-				<div th:if="${param.success}">
-					<div class="alert alert-info">You have successfully registered</div>
+				<!-- error message -->
+				<div th:if="${param.error}">
+					<div class="alert alert-danger">Invalid TC or password</div>
+				</div>
+				
+				<!-- logout message -->
+				<div th:if="${param.logout}">
+					<div class="alert alert-info">You have been logged out.</div>
 				</div>
 				
 				<br>
-				<h1>Registration</h1>
-				<form th:action="@{/registration}" method="post" th:object="${user}">
+				<h1>Login</h1>
+				<form th:action="@{/login}" method="post">
 					<div class = "form-group">
 						<label class = "control-label" for = "tc">
 							TC No
 						</label>
-						<input id="tc" class = "form-control" th:field="*{tc}" required autofocus="autofocus" />
+						<input id="tc" name="tc" class = "form-control" type="text" placeholder="TC" autofocus="autofocus" />
 					</div>
-					
+					<br>
 					<div class = "form-group">
 						<label class = "control-label" for = "password">
 							Password
 						</label>
-						<input id="password" class = "form-control" type="password" th:field="*{password}" required autofocus="autofocus" />
+						<input id="password" name="password" class = "form-control" type="password" placeholder="Password"/>
 					</div>
-				
-					<div>
-						<button type="submit" class="btn btn-success">Register</button>
-						<span>Already registered? <a href="@{/login}">Login here</a></span>
+					<br>
+					<div class="form-group">
+						<button type="submit" class="btn btn-success">Login</button>
+						<span> New user? <a th:href="@{/register}">Register</a></span>
 					</div>
-				
+					<br>
 				</form>
+				
 				
 		</div>
 	</div>

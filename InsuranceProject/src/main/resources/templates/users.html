@@ -34,7 +34,7 @@
 		</div>
 		
 		
-		 <table class = "table table-striped table-bordered">
+		 <table class = "table table-striped">
 		 	<thead class= "table-dark">
 		 		<tr>
 		 			<th style="border-bottom-left-radius :15px;"> User Name </th>
@@ -42,6 +42,7 @@
 		 			<th> User Birth Date </th>
 		 			<th> User Province </th>
 		 			<th> User TC </th>
+		 			<th> User Email </th>
 		 			<th> User Password </th>
 		 			<th style="border-bottom-right-radius :15px;"> Actions </th>
 		 		</tr>
@@ -54,6 +55,7 @@
 		 			<td th:text = "${user.b_date}"></td>
 		 			<td th:text = "${user.province}"></td>
 		 			<td th:text = "${user.tc}"></td>
+		 			<td th:text = ${user.email}></td>
 		 			<td th:text = "${user.password}"></td>
 		 			<td>
 		 				<a th:href = "@{/users/edit/{id}(id=${user.id})}"
@@ -61,6 +63,9 @@
 		 				
 		 				<a th:href = "@{/users/{id}(id=${user.id})}"
 		 				class = "btn btn-danger">Delete</a>
+		 				
+		 				<a th:href = "@{/users/cars/{id}(id=${user.id})}"
+		 				class="btn btn-info">Edit User Cars</a>
 		 			</td>
 		 		</tr>
 		 	</tbody>

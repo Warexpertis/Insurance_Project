@@ -3,10 +3,8 @@ package com.wrxprts.ims;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 @SpringBootApplication
-@EntityScan("com.wrxprts.ims.entity")
 public class InsuranceProjectApplication implements CommandLineRunner
 {
 	

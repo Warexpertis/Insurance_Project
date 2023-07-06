@@ -29,83 +29,66 @@
 	<div class="container">
 		<div class = "row">
 			<div class = "col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
-				<h1 class = "text-center">Create New User</h1>
+				<h1 class = "text-center">Add A New Car</h1>
 				<div class = "card-body">
-					<form th:action = "@{/users}" th:object = "${user}" method="POST">
+					<form th:action = "@{/users/cars/{id}/new(id=${user.id})}" th:object = "${car}" method="POST">
 						<div class = "form-group">
-							<label>User Name</label>
+							<label>Car Brand</label>
 							<input 
 							type = "text"
-							name = "name"
-							th:field = "*{name}"
+							name = "brand"
+							th:field = "*{brand}"
+							id="brand"
 							class = "form-control"
-							placeholder="Enter User Name"
+							placeholder="Enter The Car Brand"
 							/>
 						</div>
 						
 						<div class = "form-group">
-							<label>User Surname</label>
+							<label>Car Model</label>
 							<input 
 							type = "text"
-							name = "surname"
-							th:field = "*{surname}"
+							name = "model"
+							th:field = "*{model}"
+							id="model"
 							class = "form-control"
-							placeholder="Enter User Surname"
+							placeholder="Enter The Model"
 							/>
 						</div>
 						
 						<div class = "form-group">
-							<label>User Birthdate</label>
+							<label>Engine Type</label>
 							<input 
-							type = "date"
-							name = "b_date"
-							th:field = "*{b_date}"
+							type = "text"
+							name = "motorType"
+							th:field = "*{motorType}"
+							id="motorType"
 							class = "form-control"
-							placeholder="Enter User Birthdate"
+							placeholder="Enter The Engine Type"
 							/>
 						</div>		
 						
 						<div class = "form-group">
-							<label>User Province</label>
+							<label>Model Year</label>
 							<input 
 							type = "text"
-							name = "province"
-							th:field = "*{province}"
+							name = "year"
+							th:field = "*{year}"
+							id="year"
 							class = "form-control"
-							placeholder="Enter User Province"
+							placeholder="Enter The Model Year"
 							/>
 						</div>
 						
 						<div class = "form-group">
-							<label>User TC</label>
+							<label>Mileage (km)</label>
 							<input 
 							type = "text"
-							name = "tc"
-							th:field = "*{tc}"
+							name = "mileage"
+							th:field = "*{mileage}"
+							id="mileage"
 							class = "form-control"
-							placeholder="Enter User TC"
-							/>
-						</div>
-						
-						<div class = "form-group">
-							<label>User Email</label>
-							<input 
-							type = "email"
-							name = "email"
-							th:field = "*{email}"
-							class = "form-control"
-							placeholder="Enter User Email"
-							/>
-						</div>
-						
-						<div class = "form-group">
-							<label>User Password</label>
-							<input 
-							type = "text"
-							name = "password"
-							th:field = "*{password}"
-							class = "form-control"
-							placeholder="Enter User Password"
+							placeholder="Enter The Mileage"
 							/>
 						</div>
 						

@@ -1,19 +1,23 @@
 package com.wrxprts.ims.web.dto;
 
-public class UserRegistrationDto
+public class UserDto
 {
 	private String tc;
+	
+	private String email;
+	
 	private String password;
 	
-	public UserRegistrationDto()
+	public UserDto()
 	{
 		
 	}
 	
-	public UserRegistrationDto(String tc, String password)
+	public UserDto(String tc, String email, String password)
 	{
 		super();
 		this.tc = tc;
+		this.email = email;
 		this.password = password;
 	}
 	
@@ -25,6 +29,16 @@ public class UserRegistrationDto
 	public void setTc(String tc)
 	{
 		this.tc = tc;
+	}
+	
+	public String getEmail()
+	{
+		return email;
+	}
+	
+	public void setEmail(String email)
+	{
+		this.email = email;
 	}
 	
 	public String getPassword()
