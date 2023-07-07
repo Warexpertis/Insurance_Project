@@ -26,6 +26,8 @@ public interface UserService
 	
 	List<Car> getCarsByUserId(Long id);
 	
+	String carOffer(Long carID);
+	
 	User updateUser(User user);
 	
 	void deleteUserById(Long id);

@@ -1,6 +1,8 @@
 package com.wrxprts.ims.service.impl;
 
+import java.text.DecimalFormat;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -132,6 +134,34 @@ public class UserServiceImpl implements UserService
 	public Car updateCar(Car car)
 	{
 		return carRepository.save(car);
+	}
+	
+	@Override
+	public String carOffer(Long carID)
+	{
+		Car car = carRepository.findById(carID).get();
+		int age = car.getYear() - Calendar.getInstance().get(Calendar.YEAR);
+		double coef;
+		switch (car.getMotorType())
+		{
+			case "Gasoline":
+				coef = 1;
+				break;
+			case "Diesel":
+				coef = 1.1;
+				break;
+			case "Hybrid":
+				coef = 1.2;
+				break;
+			case "Electric":
+				coef = 1.2;
+				break;
+			default:
+				coef = 1;
+		}
+		double offer = coef * (car.getCarPrice() * (0.009 + age * 0.0001 + car.getMileage() * 0.0000005));
+		DecimalFormat decfor = new DecimalFormat("0.00");
+		return decfor.format(offer);
 	}
 	
 }

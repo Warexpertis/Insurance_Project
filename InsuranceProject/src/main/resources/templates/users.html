@@ -19,7 +19,7 @@
     <div class="collapse navbar-collapse" id="collapsibleNavbar">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" th:href="@{/users}">User Management</a>
+          <a class="nav-link" th:href="@{/users}">Customer Management</a>
         </li>  
       </ul>
     </div>
@@ -30,26 +30,26 @@
 
 	<div class="container">
 		<div class = "row">
-			<h1> List Users </h1>
+			<h1> List Customers </h1>
 		</div>
 		
 		
 		 <table class = "table table-striped">
 		 	<thead class= "table-dark">
-		 		<tr>
-		 			<th style="border-bottom-left-radius :15px;"> User Name </th>
-		 			<th> User Surname </th>
-		 			<th> User Birth Date </th>
-		 			<th> User Province </th>
-		 			<th> User TC </th>
-		 			<th> User Email </th>
-		 			<th> User Password </th>
-		 			<th style="border-bottom-right-radius :15px;"> Actions </th>
+		 		<tr style="vertical-align: middle">
+		 			<th style="border-top-left-radius :5px;"> Customer Name </th>
+		 			<th> Customer Surname </th>
+		 			<th> Customer Birth Date </th>
+		 			<th> Customer Province </th>
+		 			<th> Customer TC </th>
+		 			<th> Customer Email </th>
+		 			<th> Customer Password </th>
+		 			<th style="border-top-right-radius :5px;" th:style="'width: 25%'"> Actions </th>
 		 		</tr>
 		 	</thead>
 		 	
 		 	<tbody>
-		 		<tr th:each = "user: ${users}">
+		 		<tr th:each = "user: ${users}" style="vertical-align: middle">
 		 			<td th:text = "${user.name}"></td>
 		 			<td th:text = "${user.surname}"></td>
 		 			<td th:text = "${user.b_date}"></td>
@@ -64,8 +64,8 @@
 		 				<a th:href = "@{/users/{id}(id=${user.id})}"
 		 				class = "btn btn-danger">Delete</a>
 		 				
-		 				<a th:href = "@{/users/cars/{id}(id=${user.id})}"
-		 				class="btn btn-info">Edit User Cars</a>
+		 				<a th:href = "@{/users/assets/{id}(id=${user.id})}"
+		 				class="btn btn-info">Customer Assets</a>
 		 			</td>
 		 		</tr>
 		 	</tbody>
@@ -73,7 +73,7 @@
 		
 		<div class="row">
 				<div class = "col-lg-3">
-					<a th:href = "@{/users/new}" class = "btn btn-primary btn-sm mb-3">Add User</a>
+					<a th:href = "@{/users/new}" class = "btn btn-primary btn-sm mb-3">Add Customer</a>
 				</div>
 		</div>
 		

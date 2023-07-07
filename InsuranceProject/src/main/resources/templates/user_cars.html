@@ -20,7 +20,7 @@
     <div class="collapse navbar-collapse" id="collapsibleNavbar">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" th:href="@{/users}">User Management</a>
+          <a class="nav-link" th:href="@{/users}">Customer Management</a>
         </li>  
       </ul>
     </div>
@@ -30,7 +30,7 @@
 
 <div class="container">
 	<div class="row">
-		<h1>User Cars List</h1>
+		<h1>Customer Cars List</h1>
 	</div>
 	<br>
 	<table class="table table-striped">
@@ -41,6 +41,7 @@
 				<th> Engine Type </th>
 				<th> Model Year </th>
 				<th> Mileage (km) </th>
+				<th> Current Car Price </th>
 				<th> Actions </th>
 			</tr>
 		</thead>
@@ -52,6 +53,7 @@
 				<td th:text="${car.motorType}"></td>
 				<td th:text="${car.year}"></td>
 				<td th:text="${car.mileage}"></td>
+				<td th:text="${car.carPrice}"></td>
 				<td>
 					<a th:href="@{/users/cars/{id}/edit/{carID}(id=${user.id}, carID=${car.id})}"
 					class = "btn btn-primary">Update</a>

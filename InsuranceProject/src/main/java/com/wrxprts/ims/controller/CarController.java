@@ -1,6 +1,5 @@
 package com.wrxprts.ims.controller;
 
-import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -46,7 +45,9 @@ public class CarController
 	@GetMapping("/users/cars/{id}/edit/{carID}")
 	public String editCarForm(@PathVariable Long id, @PathVariable Long carID, Model model)
 	{
+		User user = userService.getUserById(id);
 		model.addAttribute("car", userService.getCarById(carID));
+		model.addAttribute("user", user);
 		return "editCar";
 	}
 	
@@ -80,10 +81,7 @@ public class CarController
 	@GetMapping("/users/cars/{id}/{carID}/traffic_insurance")
 	public String trafficInsuranceForm(@PathVariable Long id, @PathVariable Long carID, Model model)
 	{
-		Car car = userService.getCarById(carID);
-		int year = Calendar.getInstance().get(Calendar.YEAR);
-		double offer = year - car.getYear() + Integer.parseInt(car.getMileage()) * 0.15;
-		model.addAttribute("value", offer);
+		model.addAttribute("value", userService.carOffer(carID));
 		return "traffic_insurance";
 	}
 }

@@ -19,7 +19,7 @@
     <div class="collapse navbar-collapse" id="collapsibleNavbar">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" th:href="@{/users}">User Management</a>
+          <a class="nav-link" th:href="@{/users}">Customer Management</a>
         </li>  
       </ul>
     </div>
@@ -29,83 +29,83 @@
 	<div class="container">
 		<div class = "row">
 			<div class = "col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
-				<h1 class = "text-center">Update User</h1>
+				<h1 class = "text-center">Update Customer</h1>
 				<div class = "card-body">
 					<form th:action = "@{/users/{id}(id=${user.id})}" th:object = "${user}" method="POST">
 						<div class = "form-group">
-							<label>User Name</label>
+							<label>Customer Name</label>
 							<input 
 							type = "text"
 							name = "name"
 							th:field = "*{name}"
 							class = "form-control"
-							placeholder="Enter User Name"
+							placeholder="Enter Customer Name"
 							/>
 						</div>
 						
 						<div class = "form-group">
-							<label>User Surname</label>
+							<label>Customer Surname</label>
 							<input 
 							type = "text"
 							name = "surname"
 							th:field = "*{surname}"
 							class = "form-control"
-							placeholder="Enter User Surname"
+							placeholder="Enter Customer Surname"
 							/>
 						</div>
 						
 						<div class = "form-group">
-							<label>User Birthdate</label>
+							<label>Customer Birthdate</label>
 							<input 
 							type = "date"
 							name = "b_date"
 							th:field = "*{b_date}"
 							class = "form-control"
-							placeholder="Enter User Birthdate"
+							placeholder="Enter Customer Birthdate"
 							/>
 						</div>
 						
 						<div class = "form-group">
-							<label>User Province</label>
+							<label>Customer Province</label>
 							<input 
 							type = "text"
 							name = "province"
 							th:field = "*{province}"
 							class = "form-control"
-							placeholder="Enter User Province"
+							placeholder="Enter Customer Province"
 							/>
 						</div>
 						
 						<div class = "form-group">
-							<label>User TC</label>
+							<label>Customer TC</label>
 							<input 
 							type = "text"
 							name = "tc"
 							th:field = "*{tc}"
 							class = "form-control"
-							placeholder="Enter User TC"
+							placeholder="Enter Customer TC"
 							/>
 						</div>
 						
 						<div class = "form-group">
-							<label>User E-mail</label>
+							<label>Customer E-mail</label>
 							<input 
 							type = "text"
 							name = "email"
 							th:field = "*{email}"
 							class = "form-control"
-							placeholder="Enter User Email"
+							placeholder="Enter Customer Email"
 							/>
 						</div>
 						
 						<div class = "form-group">
-							<label>User Password</label>
+							<label>Customer Password</label>
 							<input 
 							type = "text"
 							name = "password"
 							th:field = "*{password}"
 							class = "form-control"
-							placeholder="Enter User Password"
+							placeholder="Enter Customer Password"
 							/>
 						</div>
 						

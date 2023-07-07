@@ -27,7 +27,9 @@ public class Car
 	
 	private Short year;
 	
-	private String mileage;
+	private int mileage;
+	
+	private int carPrice;
 	
 	@ManyToMany(mappedBy = "cars")
 	private List<User> users;
@@ -37,7 +39,8 @@ public class Car
 		
 	}
 	
-	public Car(String brand, String model, String motorType, Short year, String mileage, List<User> users)
+	public Car(String brand, String model, String motorType, Short year, int mileage, int carPrice,
+			List<User> users)
 	{
 		super();
 		this.brand = brand;
@@ -45,6 +48,7 @@ public class Car
 		this.motorType = motorType;
 		this.year = year;
 		this.mileage = mileage;
+		this.carPrice = carPrice;
 		this.users = users;
 	}
 	
@@ -98,14 +102,24 @@ public class Car
 		this.year = year;
 	}
 	
-	public String getMileage()
+	public int getMileage()
 	{
 		return mileage;
 	}
 	
-	public void setMileage(String mileage)
+	public void setMileage(int mileage)
 	{
 		this.mileage = mileage;
+	}
+	
+	public int getCarPrice()
+	{
+		return carPrice;
+	}
+	
+	public void setCarPrice(int carPrice)
+	{
+		this.carPrice = carPrice;
 	}
 	
 	public List<User> getUsers()

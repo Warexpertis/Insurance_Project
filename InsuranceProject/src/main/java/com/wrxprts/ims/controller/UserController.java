@@ -110,6 +110,14 @@ public class UserController
 		return "redirect:/users";
 	}
 	
+	@GetMapping("/users/assets/{id}")
+	public String custAssetsForm(@PathVariable Long id, Model model)
+	{
+		User cust = userService.getUserById(id);
+		model.addAttribute("cust", cust);
+		return "customer_page";
+	}
+	
 	// Handler method to handle user registration form submit request
 	@PostMapping("/register/save")
 	public String registerUserAccount(@Validated @ModelAttribute("user") UserDto userDto, BindingResult result,
