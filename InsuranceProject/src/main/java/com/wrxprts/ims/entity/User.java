@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.wrxprts.ims.validator.AgeConstraint;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,10 +18,15 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.persistence.UniqueConstraint;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "TBLUSER", uniqueConstraints = @UniqueConstraint(columnNames = "UserTC"))
@@ -30,26 +37,38 @@ public class User
 	@Column(name = "UserID", nullable = false)
 	private Long id;
 	
+	@Size(max = 15, message = "Max allowed length is 15")
+	@NotBlank(message = "Can not be empty")
 	@Column(name = "UserName", length = 15)
 	private String name;
 	
+	@Size(max = 10, message = "Max allowed length is 10")
+	@NotBlank(message = "Can not be empty")
 	@Column(name = "UserSurname", length = 10)
 	private String surname;
 	
+	@AgeConstraint(message = "Costumer must be older than 18")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Temporal(TemporalType.DATE)
 	@Column(name = "UserBirthDate")
 	private Date b_date;
 	
+	@NotBlank(message = "Can not be empty")
 	@Column(name = "UserProvince", length = 13)
 	private String province;
 	
+	@NotBlank
+	@Email(message = "Enter a valid email")
 	@Column(name = "UserEmail", unique = true)
 	private String email;
 	
+	@Size(message = "Enter a valid TC")
+	@Digits(integer = 11, fraction = 0, message = "Enter a valid TC")
 	@Column(name = "UserTC", columnDefinition = "char(11)")
 	private String tc;
 	
+	@Size(min = 8, message = "Min allowed length is 8")
+	@NotBlank(message = "Can not be empty")
 	@Column(name = "UserPassword")
 	private String password;
 	
@@ -57,8 +76,7 @@ public class User
 	@JoinTable(name = "TBLUSERROLES", joinColumns = @JoinColumn(name = "UserID", referencedColumnName = "UserID"), inverseJoinColumns = @JoinColumn(name = "RoleID", referencedColumnName = "RoleID"))
 	private List<Role> roles = new ArrayList<>();
 	
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinTable(name = "TBLUSERCARS", joinColumns = @JoinColumn(name = "UserID", referencedColumnName = "UserID"), inverseJoinColumns = @JoinColumn(name = "CarID", referencedColumnName = "CarID"))
+	@OneToMany(mappedBy = "user", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	private List<Car> cars = new ArrayList<>();
 	
 	public User()

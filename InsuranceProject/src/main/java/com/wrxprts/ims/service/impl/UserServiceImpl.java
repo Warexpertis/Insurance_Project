@@ -56,6 +56,16 @@ public class UserServiceImpl implements UserService
 	@Override
 	public void deleteUserById(Long id)
 	{
+		User user = userRepository.findById(id).get();
+		List<Car> cars = user.getCars();
+		for (Car car : cars)
+		{
+			if (car.getUser() != null)
+			{
+				car.setUser(null);
+				carRepository.save(car);
+			}
+		}
 		userRepository.deleteById(id);
 	}
 	
@@ -114,6 +124,7 @@ public class UserServiceImpl implements UserService
 			return;
 		}
 		List<Car> cars = user.getCars();
+		car.setUser(user);
 		cars.add(car);
 		userRepository.save(user);
 	}

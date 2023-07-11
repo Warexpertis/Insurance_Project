@@ -16,6 +16,8 @@ import com.wrxprts.ims.entity.User;
 import com.wrxprts.ims.service.UserService;
 import com.wrxprts.ims.web.dto.UserDto;
 
+import jakarta.validation.Valid;
+
 @Controller
 public class UserController
 {
@@ -86,15 +88,20 @@ public class UserController
 	}
 	
 	@PostMapping("/users")
-	public String saveUser(@ModelAttribute("user") User user)
+	public String saveUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult)
 	{
+		if (bindingResult.hasErrors())
+			return "create_user";
 		userService.saveUser(user);
 		return "redirect:/users";
 	}
 	
 	@PostMapping("/users/{id}")
-	public String updateUser(@PathVariable Long id, @ModelAttribute("user") User user, Model model)
+	public String updateUser(@PathVariable Long id, @Valid @ModelAttribute("user") User user, Model model,
+			BindingResult bindingResult)
 	{
+		if (bindingResult.hasErrors())
+			return "edit_user";
 		// get user from database by id
 		User existingUser = userService.getUserById(id);
 		existingUser.setName(user.getName());

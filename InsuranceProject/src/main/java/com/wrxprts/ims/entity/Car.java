@@ -1,14 +1,16 @@
 package com.wrxprts.ims.entity;
 
-import java.util.List;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 
 @Entity
 @Table(name = "TBLCAR")
@@ -25,22 +27,25 @@ public class Car
 	
 	private String motorType;
 	
+	@Min(1950)
 	private Short year;
 	
+	@PositiveOrZero
 	private int mileage;
 	
+	@Positive
 	private int carPrice;
 	
-	@ManyToMany(mappedBy = "cars")
-	private List<User> users;
+	@ManyToOne
+	@JoinColumn(name = "car_id", nullable = false)
+	private User user;
 	
 	public Car()
 	{
 		
 	}
 	
-	public Car(String brand, String model, String motorType, Short year, int mileage, int carPrice,
-			List<User> users)
+	public Car(String brand, String model, String motorType, Short year, int mileage, int carPrice, User user)
 	{
 		super();
 		this.brand = brand;
@@ -49,7 +54,7 @@ public class Car
 		this.year = year;
 		this.mileage = mileage;
 		this.carPrice = carPrice;
-		this.users = users;
+		this.user = user;
 	}
 	
 	public Long getId()
@@ -122,14 +127,14 @@ public class Car
 		this.carPrice = carPrice;
 	}
 	
-	public List<User> getUsers()
+	public User getUser()
 	{
-		return users;
+		return user;
 	}
 	
-	public void setUsers(List<User> users)
+	public void setUser(User user)
 	{
-		this.users = users;
+		this.user = user;
 	}
 	
 }

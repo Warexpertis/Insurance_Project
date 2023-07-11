@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.wrxprts.ims.entity.Car;
 import com.wrxprts.ims.entity.User;
 import com.wrxprts.ims.service.UserService;
+
+import jakarta.validation.Valid;
 
 @Controller
 public class CarController
@@ -29,14 +32,17 @@ public class CarController
 	public String addCarForm(@PathVariable Long id, Model model)
 	{
 		User user = userService.getUserById(id);
+		Car car = new Car();
 		model.addAttribute("user", user);
-		model.addAttribute("car", new Car());
+		model.addAttribute("car", car);
 		return "addCar";
 	}
 	
 	@PostMapping("/users/cars/{id}/new")
-	public String saveCar(@PathVariable Long id, @ModelAttribute("car") Car car)
+	public String saveCar(@PathVariable Long id, @Valid @ModelAttribute("car") Car car, BindingResult bindingResult)
 	{
+		if (bindingResult.hasErrors())
+			return "addCar";
 		car.setId(null);
 		userService.addCar(id, car);
 		return "redirect:/users/cars/" + id;
@@ -52,9 +58,11 @@ public class CarController
 	}
 	
 	@PostMapping("/users/cars/{id}/edit/{carID}")
-	public String editCar(@PathVariable Long id, @PathVariable Long carID, @ModelAttribute("car") Car car,
-			Model model)
+	public String editCar(@PathVariable Long id, @PathVariable Long carID, @Valid @ModelAttribute("car") Car car,
+			Model model, BindingResult bindingResult)
 	{
+		if (bindingResult.hasErrors())
+			return "editCar";
 		Car existingCar = userService.getCarById(carID);
 		existingCar.setBrand(car.getBrand());
 		existingCar.setModel(car.getModel());
