@@ -26,6 +26,7 @@ import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -47,6 +48,7 @@ public class User
 	@Column(name = "UserSurname", length = 10)
 	private String surname;
 	
+	@NotNull(message = "Can not be empty")
 	@AgeConstraint(message = "Costumer must be older than 18")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Temporal(TemporalType.DATE)
@@ -57,7 +59,7 @@ public class User
 	@Column(name = "UserProvince", length = 13)
 	private String province;
 	
-	@NotBlank
+	@NotBlank(message = "Can not be empty")
 	@Email(message = "Enter a valid email")
 	@Column(name = "UserEmail", unique = true)
 	private String email;
@@ -79,6 +81,9 @@ public class User
 	@OneToMany(mappedBy = "user", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	private List<Car> cars = new ArrayList<>();
 	
+	@OneToMany(mappedBy = "user", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	private List<House> houses = new ArrayList<>();
+	
 	public User()
 	{
 		
@@ -94,7 +99,7 @@ public class User
 	}
 	
 	public User(String name, String surname, Date b_date, String province, String tc, String email, String password,
-			List<Role> roles, List<Car> cars)
+			List<Role> roles, List<Car> cars, List<House> houses)
 	{
 		super();
 		this.name = name;
@@ -106,6 +111,7 @@ public class User
 		this.password = password;
 		this.roles = roles;
 		this.cars = cars;
+		this.houses = houses;
 	}
 	
 	public Long getId()
@@ -206,6 +212,16 @@ public class User
 	public void setCars(List<Car> cars)
 	{
 		this.cars = cars;
+	}
+	
+	public List<House> getHouses()
+	{
+		return houses;
+	}
+	
+	public void setHouses(List<House> houses)
+	{
+		this.houses = houses;
 	}
 	
 }

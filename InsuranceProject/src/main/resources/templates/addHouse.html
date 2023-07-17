@@ -34,91 +34,82 @@
 	<div class="container">
 		<div class = "row">
 			<div class = "col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
-				<h1 class = "text-center">Create New Customer</h1>
+				<h1 class = "text-center">Add A New House</h1>
 				<div class = "card-body">
-					<form th:action = "@{/users/new}" th:object = "${user}" method="POST">
+					<form th:action = "@{/users/cars/{id}/new(id=${user.id})}" th:object = "${car}" method="POST">
 						<div class = "form-group">
-							<label>Customer Name</label>
+							<label>Car Brand</label>
 							<input 
 							type = "text"
-							name = "name"
-							th:field = "*{name}"
+							name = "brand"
+							th:field = "*{brand}"
+							id="brand"
 							class = "form-control"
-							placeholder="Enter Customer Name"
+							placeholder="Enter The Car Brand"
 							/>
-							<div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="error"></div>
 						</div>
 						
 						<div class = "form-group">
-							<label>Customer Surname</label>
+							<label>Car Model</label>
 							<input 
 							type = "text"
-							name = "surname"
-							th:field = "*{surname}"
+							name = "model"
+							th:field = "*{model}"
+							id="model"
 							class = "form-control"
-							placeholder="Enter Customer Surname"
+							placeholder="Enter The Model"
 							/>
-							<div th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}" class="error"></div>
 						</div>
 						
 						<div class = "form-group">
-							<label>Customer Birthdate</label>
+							<label>Engine Type</label>
 							<input 
-							type = "date"
-							name = "b_date"
-							th:field = "*{b_date}"
+							type = "text"
+							name = "motorType"
+							th:field = "*{motorType}"
+							id="motorType"
 							class = "form-control"
-							placeholder="Enter Customer Birthdate"
+							placeholder="Enter The Engine Type"
 							/>
-							<div th:if="${#fields.hasErrors('b_date')}" th:errors="*{b_date}" class="error"></div>
 						</div>		
 						
 						<div class = "form-group">
-							<label>Customer Province</label>
+							<label>Model Year</label>
 							<input 
 							type = "text"
-							name = "province"
-							th:field = "*{province}"
+							name = "year"
+							th:field = "*{year}"
+							id="year"
 							class = "form-control"
-							placeholder="Enter Customer Province"
+							placeholder="Enter The Model Year"
 							/>
-							<div th:if="${#fields.hasErrors('province')}" th:errors="*{province}" class="error"></div>
+						<div th:if="${#fields.hasErrors('year')}" th:errors="*{year}" class="error"></div>
 						</div>
 						
 						<div class = "form-group">
-							<label>Customer TC</label>
+							<label>Mileage (km)</label>
 							<input 
 							type = "text"
-							name = "tc"
-							th:field = "*{tc}"
+							name = "mileage"
+							th:field = "*{mileage}"
+							id="mileage"
 							class = "form-control"
-							placeholder="Enter Customer TC"
+							placeholder="Enter The Mileage"
 							/>
-							<div th:if="${#fields.hasErrors('tc')}" th:errors="*{tc}" class="error"></div>
+							<div th:if="${#fields.hasErrors('mileage')}" th:errors="*{mileage}" class="error"></div>
 						</div>
 						
-						<div class = "form-group">
-							<label>Customer Email</label>
-							<input 
-							type = "email"
-							name = "email"
-							th:field = "*{email}"
-							class = "form-control"
-							placeholder="Enter Customer Email"
+						<div class="form-group">
+							<label>Current Car Price</label>
+							<input
+							type="text"
+							name="carPrice"
+							th:field="*{carPrice}"
+							id="carPrice"
+							class="form-control"
+							placeholder="Enter The Current Price"
 							/>
-							<div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error"></div>
-						</div>
-						
-						<div class = "form-group">
-							<label>Customer Password</label>
-							<input 
-							type = "text"
-							name = "password"
-							th:field = "*{password}"
-							class = "form-control"
-							placeholder="Enter Customer Password"
-							/>
-							<div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error"></div>
+							<div th:if="${#fields.hasErrors('carPrice')}" th:errors="*{carPrice}" class="error"></div>
 						</div>
 						
 						<div class = "box-footer">

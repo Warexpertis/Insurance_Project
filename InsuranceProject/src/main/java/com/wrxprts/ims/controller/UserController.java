@@ -75,6 +75,11 @@ public class UserController
 	@GetMapping("/users/{id}")
 	public String deleteUser(@PathVariable Long id)
 	{
+		User user = userService.getUserById(id);
+		for (Car car : user.getCars())
+		{
+			car.setUser(null);
+		}
 		userService.deleteUserById(id);
 		return "redirect:/users";
 	}
@@ -87,7 +92,7 @@ public class UserController
 		return "register";
 	}
 	
-	@PostMapping("/users")
+	@PostMapping("/users/new")
 	public String saveUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult)
 	{
 		if (bindingResult.hasErrors())
@@ -100,8 +105,10 @@ public class UserController
 	public String updateUser(@PathVariable Long id, @Valid @ModelAttribute("user") User user, Model model,
 			BindingResult bindingResult)
 	{
+		
 		if (bindingResult.hasErrors())
 			return "edit_user";
+		
 		// get user from database by id
 		User existingUser = userService.getUserById(id);
 		existingUser.setName(user.getName());

@@ -27,7 +27,7 @@ public class Car
 	
 	private String motorType;
 	
-	@Min(1950)
+	@Min(1990)
 	private Short year;
 	
 	@PositiveOrZero
@@ -37,7 +37,7 @@ public class Car
 	private int carPrice;
 	
 	@ManyToOne
-	@JoinColumn(name = "car_id", nullable = false)
+	@JoinColumn(name = "user_id", nullable = true)
 	private User user;
 	
 	public Car()

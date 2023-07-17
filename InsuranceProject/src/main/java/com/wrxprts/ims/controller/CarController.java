@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.wrxprts.ims.entity.Car;
 import com.wrxprts.ims.entity.User;
+import com.wrxprts.ims.service.CarService;
 import com.wrxprts.ims.service.UserService;
 
 import jakarta.validation.Valid;
@@ -20,11 +21,13 @@ import jakarta.validation.Valid;
 public class CarController
 {
 	private UserService userService;
+	private CarService carService;
 	
-	public CarController(UserService userService)
+	public CarController(UserService userService, CarService carService)
 	{
 		super();
 		this.userService = userService;
+		this.carService = carService;
 	}
 	
 	// Handler method to handle adding a new car to current user
@@ -33,18 +36,22 @@ public class CarController
 	{
 		User user = userService.getUserById(id);
 		Car car = new Car();
+		car.setUser(user);
 		model.addAttribute("user", user);
 		model.addAttribute("car", car);
 		return "addCar";
 	}
 	
 	@PostMapping("/users/cars/{id}/new")
-	public String saveCar(@PathVariable Long id, @Valid @ModelAttribute("car") Car car, BindingResult bindingResult)
+	public String saveCar(@PathVariable Long id, @Valid @ModelAttribute("car") Car car, BindingResult bindingResult,
+			@ModelAttribute("user") User user)
 	{
 		if (bindingResult.hasErrors())
 			return "addCar";
-		car.setId(null);
-		userService.addCar(id, car);
+		car.setUser(user);
+		List<Car> cars = user.getCars();
+		cars.add(car);
+		carService.saveCar(id, car);
 		return "redirect:/users/cars/" + id;
 	}
 	
@@ -54,7 +61,7 @@ public class CarController
 		User user = userService.getUserById(id);
 		model.addAttribute("car", userService.getCarById(carID));
 		model.addAttribute("user", user);
-		return "editCar";
+		return "editHouse";
 	}
 	
 	@PostMapping("/users/cars/{id}/edit/{carID}")
@@ -82,7 +89,6 @@ public class CarController
 		List<Car> cars = user.getCars();
 		cars.remove(carIdx);
 		userService.deleteCar(carID);
-		// userService.saveUser(user);
 		return "redirect:/users/cars/" + id;
 	}
 	
