@@ -39,38 +39,32 @@
 					<form th:action = "@{/users/cars/{id}/new(id=${user.id})}" th:object = "${car}" method="POST">
 						<div class = "form-group">
 							<label>Car Brand</label>
-							<input 
-							type = "text"
-							name = "brand"
-							th:field = "*{brand}"
-							id="brand"
-							class = "form-control"
-							placeholder="Enter The Car Brand"
-							/>
+							<select id="brand" class="form-select" name="brand">
+								<option value="">Select A Brand</option>
+								<option 
+								th:each="car : ${carList}" 
+								th:value="${car.brand}" 
+								th:text="${car.brand}"
+								></option>
+							</select>
 						</div>
 						
 						<div class = "form-group">
 							<label>Car Model</label>
-							<input 
-							type = "text"
-							name = "model"
-							th:field = "*{model}"
-							id="model"
-							class = "form-control"
-							placeholder="Enter The Model"
-							/>
+							<select class="form-select" name="model">
+								<option value="">Select A Model</option>
+							</select>
 						</div>
 						
 						<div class = "form-group">
 							<label>Engine Type</label>
-							<input 
-							type = "text"
-							name = "motorType"
-							th:field = "*{motorType}"
-							id="motorType"
-							class = "form-control"
-							placeholder="Enter The Engine Type"
-							/>
+							<select class="form-select" name="motorType">
+								<option value="">Select The Engine Type</option>
+								<option value="Gasoline">Gasoline</option>
+								<option value="Diesel">Diesel</option>
+								<option value="Hybrid">Hybrid</option>
+								<option value="Electric">Electric</option>
+							</select>
 						</div>		
 						
 						<div class = "form-group">
@@ -122,5 +116,35 @@
 			</div>
 		</div>
 	</div>
+	<script>
+    // Get carList from Thymeleaf
+    var carList = [[${carList}]];
+
+    // Get brand and model elements
+    var brandElement = document.getElementById("brand");
+    var modelElement = document.getElementById("model");
+
+    // Add event listener for brand change
+    brandElement.addEventListener("change", function() {
+        // Clear model options
+        modelElement.innerHTML = "<option value=''>Select Model</option>";
+
+        // Get selected brand
+        var selectedBrand = this.value;
+
+        // Find models for selected brand
+        var models = carList.find(function(car) {
+            return car.brand === selectedBrand;
+        }).models;
+
+        // Add model options
+        models.forEach(function(model) {
+            var option = document.createElement("option");
+            option.value = model;
+            option.text = model;
+            modelElement.add(option);
+        });
+    });
+</script>
 </body>
 </html>

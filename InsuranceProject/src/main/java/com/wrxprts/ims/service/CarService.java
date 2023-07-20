@@ -1,8 +1,19 @@
 package com.wrxprts.ims.service;
 
+import java.util.List;
+
 import com.wrxprts.ims.entity.Car;
 
 public interface CarService
 {
-	Car saveCar(Long id, Car car);
+	List<Car> getCarsById(Long id);
+	
+	Car getCarById(Long carID);
+	
+	Car saveCar(Car car);
+	
+	Car editCar(Car car);
+	
+	String carOffer(Long carID);
+	
 }

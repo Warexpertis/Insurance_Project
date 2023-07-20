@@ -11,13 +11,9 @@ import com.wrxprts.ims.validator.AgeConstraint;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
@@ -64,7 +60,7 @@ public class User
 	@Column(name = "UserEmail", unique = true)
 	private String email;
 	
-	@Size(message = "Enter a valid TC")
+	@Size(min = 11, message = "Enter a valid TC")
 	@Digits(integer = 11, fraction = 0, message = "Enter a valid TC")
 	@Column(name = "UserTC", columnDefinition = "char(11)")
 	private String tc;
@@ -74,9 +70,7 @@ public class User
 	@Column(name = "UserPassword")
 	private String password;
 	
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinTable(name = "TBLUSERROLES", joinColumns = @JoinColumn(name = "UserID", referencedColumnName = "UserID"), inverseJoinColumns = @JoinColumn(name = "RoleID", referencedColumnName = "RoleID"))
-	private List<Role> roles = new ArrayList<>();
+	private boolean active = true;
 	
 	@OneToMany(mappedBy = "user", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	private List<Car> cars = new ArrayList<>();
@@ -89,17 +83,16 @@ public class User
 		
 	}
 	
-	public User(String tc, String email, String password, List<Role> roles)
+	public User(String tc, String email, String password)
 	{
 		super();
 		this.tc = tc;
 		this.email = email;
 		this.password = password;
-		this.roles = roles;
 	}
 	
 	public User(String name, String surname, Date b_date, String province, String tc, String email, String password,
-			List<Role> roles, List<Car> cars, List<House> houses)
+			boolean active, List<Car> cars, List<House> houses)
 	{
 		super();
 		this.name = name;
@@ -109,7 +102,7 @@ public class User
 		this.tc = tc;
 		this.email = email;
 		this.password = password;
-		this.roles = roles;
+		this.active = active;
 		this.cars = cars;
 		this.houses = houses;
 	}
@@ -194,14 +187,14 @@ public class User
 		this.password = password;
 	}
 	
-	public List<Role> getRoles()
+	public boolean isActive()
 	{
-		return roles;
+		return active;
 	}
 	
-	public void setRoles(List<Role> roles)
+	public void setActive(boolean active)
 	{
-		this.roles = roles;
+		this.active = active;
 	}
 	
 	public List<Car> getCars()

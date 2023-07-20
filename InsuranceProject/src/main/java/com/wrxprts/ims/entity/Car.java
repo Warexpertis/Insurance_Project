@@ -36,6 +36,10 @@ public class Car
 	@Positive
 	private int carPrice;
 	
+	private boolean offerState = false;
+	
+	private int offer;
+	
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = true)
 	private User user;
@@ -45,7 +49,8 @@ public class Car
 		
 	}
 	
-	public Car(String brand, String model, String motorType, Short year, int mileage, int carPrice, User user)
+	public Car(String brand, String model, String motorType, Short year, int mileage, int carPrice,
+			boolean offerState, int offer, User user)
 	{
 		super();
 		this.brand = brand;
@@ -54,6 +59,8 @@ public class Car
 		this.year = year;
 		this.mileage = mileage;
 		this.carPrice = carPrice;
+		this.offerState = offerState;
+		this.offer = offer;
 		this.user = user;
 	}
 	
@@ -125,6 +132,26 @@ public class Car
 	public void setCarPrice(int carPrice)
 	{
 		this.carPrice = carPrice;
+	}
+	
+	public boolean isOfferState()
+	{
+		return offerState;
+	}
+	
+	public void setOfferState(boolean offerState)
+	{
+		this.offerState = offerState;
+	}
+	
+	public int getOffer()
+	{
+		return offer;
+	}
+	
+	public void setOffer(int offer)
+	{
+		this.offer = offer;
 	}
 	
 	public User getUser()

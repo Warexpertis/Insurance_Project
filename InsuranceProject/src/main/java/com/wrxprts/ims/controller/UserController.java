@@ -1,17 +1,13 @@
 package com.wrxprts.ims.controller;
 
-import java.util.List;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.wrxprts.ims.entity.Car;
 import com.wrxprts.ims.entity.User;
 import com.wrxprts.ims.service.UserService;
 import com.wrxprts.ims.web.dto.UserDto;
@@ -60,27 +56,13 @@ public class UserController
 		return "edit_user";
 	}
 	
-	// Handler method to handle list the cars of current user
-	@GetMapping("/users/cars/{id}")
-	public String listUserCarsForm(@PathVariable Long id, Model model)
-	{
-		User user = userService.getUserById(id);
-		List<Car> cars = userService.getCarsByUserId(id);
-		model.addAttribute("user", user);
-		model.addAttribute("cars", cars);
-		return "user_cars";
-	}
-	
 	// Handler method to handle delete user request
 	@GetMapping("/users/{id}")
 	public String deleteUser(@PathVariable Long id)
 	{
 		User user = userService.getUserById(id);
-		for (Car car : user.getCars())
-		{
-			car.setUser(null);
-		}
-		userService.deleteUserById(id);
+		user.setActive(false);
+		userService.updateUser(user);
 		return "redirect:/users";
 	}
 	
@@ -97,12 +79,13 @@ public class UserController
 	{
 		if (bindingResult.hasErrors())
 			return "create_user";
+		user.setActive(true);
 		userService.saveUser(user);
 		return "redirect:/users";
 	}
 	
 	@PostMapping("/users/{id}")
-	public String updateUser(@PathVariable Long id, @Valid @ModelAttribute("user") User user, Model model,
+	public String updateUser(@PathVariable Long id, @Valid @ModelAttribute("user") User user,
 			BindingResult bindingResult)
 	{
 		
@@ -130,28 +113,6 @@ public class UserController
 		User cust = userService.getUserById(id);
 		model.addAttribute("cust", cust);
 		return "customer_page";
-	}
-	
-	// Handler method to handle user registration form submit request
-	@PostMapping("/register/save")
-	public String registerUserAccount(@Validated @ModelAttribute("user") UserDto userDto, BindingResult result,
-			Model model)
-	{
-		User existingUser = userService.findUserByTc(userDto.getTc());
-		
-		if (existingUser != null && existingUser.getTc() != null && !existingUser.getTc().isEmpty())
-		{
-			result.rejectValue("tc", null, "There is already an account registered with the same TC");
-		}
-		
-		if (result.hasErrors())
-		{
-			model.addAttribute("user", userDto);
-			return "/register";
-		}
-		
-		userService.registerUser(userDto);
-		return "redirect:/register?success";
 	}
 	
 	// Handler method to handle login request

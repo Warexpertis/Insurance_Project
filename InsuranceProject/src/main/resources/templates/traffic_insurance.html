@@ -34,9 +34,9 @@
 		<h4 th:text="'Our offer is ' + ${value}" class="text-center"></h4>
 		<br>
 			<form th:action="@{/users/cars}" method="post" class="text-center">
-			<a th:href="@{/users/}" onclick="alert('You have accepted the offer')"
+			<a th:href="@{/users/cars/{id}/{carID}/traffic_insurance(id=${user.id})}" onclick="alert('You have accepted the offer')"
 			class = "btn btn-success">Accept</a>
-			<a th:href="@{/users/}" onclick="alert('You have denied the offer')"
+			<a th:href="@{/users/cars/{id}/{carID}/traffic_insurance(id=${user.id})}" onclick="alert('You have denied the offer')"
 			class = "btn btn-danger">Deny</a>
 			</form>
 		</div>

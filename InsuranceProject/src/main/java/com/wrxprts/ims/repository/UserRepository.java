@@ -1,5 +1,7 @@
 package com.wrxprts.ims.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.wrxprts.ims.entity.User;
@@ -7,4 +9,6 @@ import com.wrxprts.ims.entity.User;
 public interface UserRepository extends JpaRepository<User, Long>
 {
 	User findByTc(String tc);
+	
+	List<User> findByActive(boolean active);
 }
