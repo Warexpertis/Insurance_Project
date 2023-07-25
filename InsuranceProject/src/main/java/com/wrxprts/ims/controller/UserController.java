@@ -57,12 +57,12 @@ public class UserController
 	}
 	
 	// Handler method to handle delete user request
-	@GetMapping("/users/{id}")
+	@GetMapping("/users/{id}/deactivate")
 	public String deleteUser(@PathVariable Long id)
 	{
 		User user = userService.getUserById(id);
 		user.setActive(false);
-		userService.updateUser(user);
+		userService.saveUser(user);
 		return "redirect:/users";
 	}
 	
@@ -77,14 +77,27 @@ public class UserController
 	@PostMapping("/users/new")
 	public String saveUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult)
 	{
+		boolean emailExists = userService.emailExists(user.getEmail());
+		boolean tcExists = userService.tcExists(user.getTc());
+		boolean userExists = userService.userExists(user.getName(), user.getSurname(), user.getBirthDate(),
+				user.getProvince());
+		if (emailExists)
+			bindingResult.rejectValue("email", "error.user", "This email already belongs to an user");
+		if (tcExists)
+			bindingResult.rejectValue("tc", "error.user", "This tc already belongs to an user");
+		if (userExists)
+			bindingResult.reject("error.user", "This user already exists");
+		
 		if (bindingResult.hasErrors())
 			return "create_user";
+		
 		user.setActive(true);
 		userService.saveUser(user);
 		return "redirect:/users";
+		
 	}
 	
-	@PostMapping("/users/{id}")
+	@PostMapping("/users/edit/{id}")
 	public String updateUser(@PathVariable Long id, @Valid @ModelAttribute("user") User user,
 			BindingResult bindingResult)
 	{
@@ -96,7 +109,7 @@ public class UserController
 		User existingUser = userService.getUserById(id);
 		existingUser.setName(user.getName());
 		existingUser.setSurname(user.getSurname());
-		existingUser.setB_date(user.getB_date());
+		existingUser.setBirthDate(user.getBirthDate());
 		existingUser.setProvince(user.getProvince());
 		existingUser.setTc(user.getTc());
 		existingUser.setEmail(user.getEmail());

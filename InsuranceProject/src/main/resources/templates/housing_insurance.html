@@ -31,17 +31,30 @@
 	<div class="container">
 	<div class="row">
 		<div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
-			<h4 th:text="${cust.name} + ' ' + ${cust.surname}" class="text-center"></h4>
-			<br>
-			<form th:action="@{/users/cars}" method="get" class="text-center">
-			<a th:href="@{/users/cars/{id}(id=${cust.id})}"
-			class = "btn btn-secondary">Vehicles</a>
-			<a th:href="@{/users/houses/{id}(id=${cust.id})}" 
-			class = "btn btn-secondary">Houses</a>
+		<h4 th:text="'Our offer is ' + ${value} + ' per year'" class="text-center"></h4>
+		<br>
+			<form th:action="@{/users/houses}" method="post" class="text-center">
+			<a th:href="@{/users/houses/{id}/{houseID}/offer/accept(id=${user.id}, houseID=${house.id})}" 
+			class = "btn btn-success">Accept</a>
+			<a th:href="@{/users/houses/{id}/{houseID}/offer/deny(id=${user.id}, houseID=${house.id})}" 
+			class = "btn btn-danger">Deny</a>
 			</form>
-			<br>
+		<br>
 		</div>
 	</div>
+	</div>
+	<br>
+	<div class="container">
+		<div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+		<br>
+			 <div th:if="${house.offerState}">
+			    <h5 class="text-center" style="color: green;">You have accepted the offer.</h5>
+			</div>
+			<div th:unless="${house.offerState}">
+			    <h5 class="text-center" style="color: red;">You have not accepted the offer.</h5>
+			</div>
+			<br>
+		</div>
 	</div>
 	</body>
 </html>

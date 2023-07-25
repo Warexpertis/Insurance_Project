@@ -16,4 +16,5 @@ public interface CarService
 	
 	String carOffer(Long carID);
 	
+	boolean carExists(String model, Short year, int mileage);
 }

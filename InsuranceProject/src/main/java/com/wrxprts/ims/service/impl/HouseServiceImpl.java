@@ -1,5 +1,7 @@
 package com.wrxprts.ims.service.impl;
 
+import java.text.DecimalFormat;
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -45,15 +47,20 @@ public class HouseServiceImpl implements HouseService
 	}
 	
 	@Override
-	public void deleteHouse(Long houseID)
-	{
-		houseRepository.deleteById(houseID);
-	}
-	
-	@Override
 	public House getHouseById(Long houseID)
 	{
 		return houseRepository.findById(houseID).get();
+	}
+	
+	@Override
+	public String houseOffer(Long houseID)
+	{
+		House house = houseRepository.findById(houseID).get();
+		int age = house.getYear() - Calendar.getInstance().get(Calendar.YEAR);
+		double offer = house.getHousePrice() * -1
+				* (age * 0.0002 + house.getSize() * 0.0000003 + house.getFloor() * 0.00000006);
+		DecimalFormat decfor = new DecimalFormat("0.00");
+		return decfor.format(offer);
 	}
 	
 }

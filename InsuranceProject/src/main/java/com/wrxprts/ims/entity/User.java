@@ -49,7 +49,7 @@ public class User
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Temporal(TemporalType.DATE)
 	@Column(name = "UserBirthDate")
-	private Date b_date;
+	private Date birthDate;
 	
 	@NotBlank(message = "Can not be empty")
 	@Column(name = "UserProvince", length = 13)
@@ -91,13 +91,13 @@ public class User
 		this.password = password;
 	}
 	
-	public User(String name, String surname, Date b_date, String province, String tc, String email, String password,
-			boolean active, List<Car> cars, List<House> houses)
+	public User(String name, String surname, Date birthDate, String province, String tc, String email,
+			String password, boolean active, List<Car> cars, List<House> houses)
 	{
 		super();
 		this.name = name;
 		this.surname = surname;
-		this.b_date = b_date;
+		this.birthDate = birthDate;
 		this.province = province;
 		this.tc = tc;
 		this.email = email;
@@ -137,14 +137,14 @@ public class User
 		this.surname = surname;
 	}
 	
-	public Date getB_date()
+	public Date getBirthDate()
 	{
-		return b_date;
+		return birthDate;
 	}
 	
-	public void setB_date(Date b_date)
+	public void setBirthDate(Date birthDate)
 	{
-		this.b_date = b_date;
+		this.birthDate = birthDate;
 	}
 	
 	public String getProvince()

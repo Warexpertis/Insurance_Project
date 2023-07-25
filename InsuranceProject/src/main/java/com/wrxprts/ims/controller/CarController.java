@@ -43,7 +43,7 @@ public class CarController
 	public String listCustCarsForm(@PathVariable Long id, Model model)
 	{
 		User user = userService.getUserById(id);
-		List<Car> cars = carService.getCarsById(id);
+		List<Car> cars = user.getCars();
 		model.addAttribute("user", user);
 		model.addAttribute("cars", cars);
 		return "user_cars";
@@ -72,10 +72,23 @@ public class CarController
 	
 	@PostMapping("/users/cars/{id}/new")
 	public String saveCar(@PathVariable Long id, @Valid @ModelAttribute("car") Car car, BindingResult bindingResult,
-			@ModelAttribute("user") User user)
+			@ModelAttribute("user") User user, Model model) throws IOException
 	{
+		boolean carExists = carService.carExists(car.getModel(), car.getYear(), car.getMileage());
+		if (carExists)
+			bindingResult.reject("error.car", "This car has already been added");
 		if (bindingResult.hasErrors())
+		{
+			Resource resource = new ClassPathResource("car-list.json");
+			ObjectMapper mapper = new ObjectMapper();
+			List<CarList> carList = mapper.readValue(resource.getInputStream(),
+					new TypeReference<List<CarList>>()
+					{
+					});
+			// Add carList to model
+			model.addAttribute("carList", carList);
 			return "addCar";
+		}
 		car.setUser(user);
 		List<Car> cars = user.getCars();
 		cars.add(car);
@@ -88,7 +101,6 @@ public class CarController
 	{
 		User user = userService.getUserById(id);
 		Car car = carService.getCarById(carID);
-		// car.setUser(user);
 		model.addAttribute("car", car);
 		model.addAttribute("user", user);
 		return "editCar";
@@ -121,9 +133,12 @@ public class CarController
 	public String deleteCar(@PathVariable("id") Long id, @PathVariable("carIdx") int carIdx,
 			@PathVariable("carID") Long carID)
 	{
+		System.out.println(carIdx);
 		User user = userService.getUserById(id);
 		List<Car> cars = user.getCars();
 		cars.remove(carIdx);
+		user.setCars(cars);
+		userService.saveUser(user);
 		return "redirect:/users/cars/" + id;
 	}
 	
@@ -131,8 +146,37 @@ public class CarController
 	public String trafficInsuranceForm(@PathVariable Long id, @PathVariable Long carID, Model model)
 	{
 		User user = userService.getUserById(id);
+		Car car = carService.getCarById(carID);
 		model.addAttribute("user", user);
+		model.addAttribute("car", car);
 		model.addAttribute("value", carService.carOffer(carID));
 		return "traffic_insurance";
+	}
+	
+	@GetMapping("/users/cars/{id}/{carID}/offer/accept")
+	public String acceptOffer(@PathVariable Long id, @PathVariable Long carID)
+	{
+		Car car = carService.getCarById(id);
+		String offer = carService.carOffer(carID).replace(',', '.');
+		car.setOfferState(true);
+		car.setOffer(Double.parseDouble(offer));
+		carService.saveCar(car);
+		return "redirect:/users/cars/" + id;
+	}
+	
+	@GetMapping("/users/cars/{id}/{carID}/offer/deny")
+	public String denyOffer(@PathVariable Long id, @PathVariable Long carID, Model model)
+	{
+		Car car = carService.getCarById(id);
+		double refund = 0;
+		if (car.isOfferState())
+		{
+			refund = (car.getOffer() - car.getYear() * 2.5) * 20 / 100;
+			car.setOfferState(false);
+			carService.saveCar(car);
+			
+		}
+		return "redirect:/users/cars/" + id + "/" + carID + "/traffic_insurance" + "?refund=" + refund;
+		
 	}
 }

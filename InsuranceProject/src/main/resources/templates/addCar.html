@@ -9,7 +9,7 @@
 	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
 	crossorigin="anonymous">
 	<style type="text/css">
-		div.error{
+		.error{
 			color: red;
 		}
 	</style>
@@ -51,7 +51,7 @@
 						
 						<div class = "form-group">
 							<label>Car Model</label>
-							<select class="form-select" name="model">
+							<select class="form-select" name="model" id="model">
 								<option value="">Select A Model</option>
 							</select>
 						</div>
@@ -106,6 +106,12 @@
 							<div th:if="${#fields.hasErrors('carPrice')}" th:errors="*{carPrice}" class="error"></div>
 						</div>
 						
+						<div th:if="${#fields.hasGlobalErrors()}">
+						    <ul>
+						        <li th:each="error : ${#fields.globalErrors}" th:text="${error}" class="error">Error</li>
+						    </ul>
+						</div>
+						
 						<div class = "box-footer">
 							<button type = "submit" class = "btn btn-primary">
 								Submit
@@ -116,7 +122,7 @@
 			</div>
 		</div>
 	</div>
-	<script>
+	<script th:inline="javascript">
     // Get carList from Thymeleaf
     var carList = [[${carList}]];
 

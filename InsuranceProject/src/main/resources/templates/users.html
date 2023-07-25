@@ -52,7 +52,7 @@
 		 		<tr th:each = "user: ${users}" style="vertical-align: middle">
 		 			<td th:text = "${user.name}"></td>
 		 			<td th:text = "${user.surname}"></td>
-		 			<td th:text = "${user.b_date}"></td>
+		 			<td th:text = "${user.birthDate}"></td>
 		 			<td th:text = "${user.province}"></td>
 		 			<td th:text = "${user.tc}"></td>
 		 			<td th:text = ${user.email}></td>
@@ -61,7 +61,7 @@
 		 				<a th:href = "@{/users/edit/{id}(id=${user.id})}"
 		 				class = "btn btn-primary">Update</a>
 		 				
-		 				<a th:href = "@{/users/{id}(id=${user.id})}"
+		 				<a th:href = "@{/users/{id}/deactivate(id=${user.id})}"
 		 				class = "btn btn-danger">Delete</a>
 		 				
 		 				<a th:href = "@{/users/assets/{id}(id=${user.id})}"

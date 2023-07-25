@@ -35,7 +35,7 @@ public class House
 	private String aveORstrt;
 	
 	@NotBlank(message = "Can not be empty")
-	private String aptNo;
+	private String buildingNo;
 	
 	@NotBlank(message = "Can not be empty")
 	private String flatNo;
@@ -46,15 +46,15 @@ public class House
 	@Positive
 	private int size;
 	
-	@Min(1990)
+	@Min(1980)
 	private short year;
 	
 	@Positive
 	private int housePrice;
 	
-	private int offer;
+	private double offer;
 	
-	private boolean offerState;
+	private boolean offerState = false;
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = true)
@@ -65,16 +65,16 @@ public class House
 		
 	}
 	
-	public House(String province, String district, String neighborhood, String aveORstrt, String aptNo,
-			String flatNo, byte floor, int size, short year, int housePrice, int offer, boolean offerState,
-			User user)
+	public House(String province, String district, String neighborhood, String aveORstrt, String buildingNo,
+			String flatNo, byte floor, int size, short year, int housePrice, double offer,
+			boolean offerState, User user)
 	{
 		super();
 		this.province = province;
 		this.district = district;
 		this.neighborhood = neighborhood;
 		this.aveORstrt = aveORstrt;
-		this.aptNo = aptNo;
+		this.buildingNo = buildingNo;
 		this.flatNo = flatNo;
 		this.floor = floor;
 		this.size = size;
@@ -135,14 +135,14 @@ public class House
 		this.aveORstrt = aveORstrt;
 	}
 	
-	public String getAptNo()
+	public String getBuildingNo()
 	{
-		return aptNo;
+		return buildingNo;
 	}
 	
-	public void setAptNo(String aptNo)
+	public void setBuildingNo(String buildingNo)
 	{
-		this.aptNo = aptNo;
+		this.buildingNo = buildingNo;
 	}
 	
 	public String getFlatNo()
@@ -195,12 +195,12 @@ public class House
 		this.housePrice = housePrice;
 	}
 	
-	public int getOffer()
+	public double getOffer()
 	{
 		return offer;
 	}
 	
-	public void setOffer(int offer)
+	public void setOffer(double offer)
 	{
 		this.offer = offer;
 	}

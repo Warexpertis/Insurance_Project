@@ -14,11 +14,22 @@ public class Validators implements ConstraintValidator<AgeConstraint, Date>
 	@Override
 	public boolean isValid(Date value, ConstraintValidatorContext context)
 	{
-		if (value == null)
+		try
+		{
+			if (value == null)
+				return true;
+			LocalDate birthdate = value.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+			LocalDate now = LocalDate.now();
+			return Period.between(birthdate, now).getYears() >= 18;
+		}
+		
+		catch (Exception e)
+		{
+			// Log the exception for debugging purposes
+			e.printStackTrace();
+			// Return true if the value is not a valid Date object
 			return true;
-		LocalDate birthdate = value.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-		LocalDate now = LocalDate.now();
-		return Period.between(birthdate, now).getYears() >= 18;
+		}
 	}
 	
 }

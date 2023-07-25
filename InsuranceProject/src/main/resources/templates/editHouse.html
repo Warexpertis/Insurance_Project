@@ -36,7 +36,7 @@
 			<div class = "col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
 				<h1 class = "text-center">Add A New House</h1>
 				<div class = "card-body">
-					<form th:action = "@{/users/houses/{id}/new(id=${user.id})}" th:object = "${house}" method="POST">
+					<form th:action="@{/users/houses/{id}/edit/{houseID}(id=${user.id}, houseID=${house.id})}" th:object="${house}" method="POST">
 						<div class = "form-group">
 							<label>Province</label>
 							<input 

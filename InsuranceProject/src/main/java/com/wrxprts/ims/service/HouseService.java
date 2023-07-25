@@ -14,5 +14,5 @@ public interface HouseService
 	
 	House editHouse(House house);
 	
-	void deleteHouse(Long houseID);
+	String houseOffer(Long carID);
 }

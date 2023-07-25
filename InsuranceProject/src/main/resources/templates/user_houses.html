@@ -30,7 +30,7 @@
 
 <div class="container">
 	<div class="row">
-		<h1>Customer Cars List</h1>
+		<h1>Customer Houses List</h1>
 	</div>
 	<br>
 	<table class="table table-striped">
@@ -40,12 +40,13 @@
 				<th> District </th>
 				<th> Neighborhood </th>
 				<th> Avenue or Street </th>
-				<th> Apartment No </th>
+				<th> Building No </th>
 				<th> Flat No </th>
 				<th> Floor </th>
-				<th> Size </th>
+				<th> Size (m2) </th>
 				<th> Year </th>
 				<th> House Price </th>
+				<td  style="width: 38%;"> Actions </td>
 			</tr>
 		</thead>
 		
@@ -55,18 +56,21 @@
 				<td th:text="${house.district}"></td>
 				<td th:text="${house.neighborhood}"></td>
 				<td th:text="${house.aveORstrt}"></td>
-				<td th:text="${house.aptNo}"></td>
+				<td th:text="${house.buildingNo}"></td>
 				<td th:text="${house.flatNo}"></td>
 				<td th:text="${house.floor}"></td>
 				<td th:text="${house.size}"></td>
 				<td th:text="${house.year}"></td>
 				<td th:text="${house.housePrice}"></td>
 				<td>
-					<a th:href="@{/users/houses/{id}/edit/{houseID}(id=${user.id}, housesID=${house.id})}"
+					<a th:href="@{/users/houses/{id}/edit/{houseID}(id=${user.id}, houseID=${house.id})}"
 					class = "btn btn-primary">Update</a>
 					<a th:href="@{/users/houses/{id}/{houseIdx}+{houseID}(id=${user.id}, houseIdx=${houseStat.index}, houseID=${house.id})}"
 					class = "btn btn-danger">Delete</a>
-					
+					<a th:href="@{/users/houses/{id}/{houseID}/housing_insurance(id=${user.id}, houseID=${house.id})}"
+					class="btn btn-warning">Housing Insurance</a>
+					<a 
+					class="btn btn-info">Household Goods</a>
 				</td>
 			</tr>
 		</tbody>

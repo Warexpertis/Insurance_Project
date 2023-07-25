@@ -81,4 +81,10 @@ public class CarServiceImpl implements CarService
 		return decfor.format(offer);
 	}
 	
+	@Override
+	public boolean carExists(String model, Short year, int mileage)
+	{
+		return carRepository.findByModelAndYearAndMileage(model, year, mileage).isPresent();
+	}
+	
 }

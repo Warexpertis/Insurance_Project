@@ -9,6 +9,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 
@@ -21,10 +22,13 @@ public class Car
 	@Column(name = "CarID", nullable = false)
 	private Long id;
 	
+	@NotBlank
 	private String brand;
 	
+	@NotBlank
 	private String model;
 	
+	@NotBlank
 	private String motorType;
 	
 	@Min(1990)
@@ -38,7 +42,7 @@ public class Car
 	
 	private boolean offerState = false;
 	
-	private int offer;
+	private double offer;
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = true)
@@ -144,12 +148,12 @@ public class Car
 		this.offerState = offerState;
 	}
 	
-	public int getOffer()
+	public double getOffer()
 	{
 		return offer;
 	}
 	
-	public void setOffer(int offer)
+	public void setOffer(double offer)
 	{
 		this.offer = offer;
 	}

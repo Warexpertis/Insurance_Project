@@ -34,7 +34,7 @@ public class HouseController
 	public String listCustHousesForm(@PathVariable Long id, Model model)
 	{
 		User user = userService.getUserById(id);
-		List<House> houses = houseService.getHousesById(id);
+		List<House> houses = user.getHouses();
 		model.addAttribute("user", user);
 		model.addAttribute("houses", houses);
 		return "user_houses";
@@ -68,23 +68,30 @@ public class HouseController
 	public String editHouseForm(@PathVariable Long id, @PathVariable Long houseID, Model model)
 	{
 		User user = userService.getUserById(id);
-		model.addAttribute("house", houseService.getHouseById(houseID));
+		House house = houseService.getHouseById(houseID);
+		model.addAttribute("house", house);
 		model.addAttribute("user", user);
 		return "editHouse";
 	}
 	
 	@PostMapping("/users/houses/{id}/edit/{houseID}")
 	public String editHouse(@PathVariable Long id, @PathVariable Long houseID,
-			@Valid @ModelAttribute("house") House house, Model model, BindingResult bindingResult)
+			@Valid @ModelAttribute("house") House house, BindingResult bindingResult, Model model)
 	{
+		User user = userService.getUserById(id);
 		if (bindingResult.hasErrors())
+		{
+			house.setId(houseID);
+			house.setUser(user);
+			model.addAttribute("user", user);
 			return "editHouse";
+		}
 		House existingHouse = houseService.getHouseById(houseID);
 		existingHouse.setProvince(house.getProvince());
 		existingHouse.setDistrict(house.getDistrict());
 		existingHouse.setNeighborhood(house.getNeighborhood());
 		existingHouse.setAveORstrt(house.getAveORstrt());
-		existingHouse.setAptNo(house.getAptNo());
+		existingHouse.setBuildingNo(house.getBuildingNo());
 		existingHouse.setFlatNo(house.getFlatNo());
 		existingHouse.setFloor(house.getFloor());
 		existingHouse.setSize(house.getSize());
@@ -102,8 +109,38 @@ public class HouseController
 		User user = userService.getUserById(id);
 		List<House> houses = user.getHouses();
 		houses.remove(houseIdx);
-		houseService.deleteHouse(houseID);
 		return "redirect:/users/house/" + id;
+	}
+	
+	@GetMapping("/users/houses/{id}/{houseID}/housing_insurance")
+	public String housingInsuranceForm(@PathVariable Long id, @PathVariable Long houseID, Model model)
+	{
+		User user = userService.getUserById(id);
+		House house = houseService.getHouseById(houseID);
+		model.addAttribute("user", user);
+		model.addAttribute("house", house);
+		model.addAttribute("value", houseService.houseOffer(houseID));
+		return "housing_insurance";
+	}
+	
+	@GetMapping("/users/houses/{id}/{houseID}/offer/accept")
+	public String acceptOffer(@PathVariable Long id, @PathVariable Long houseID)
+	{
+		House house = houseService.getHouseById(id);
+		String offer = houseService.houseOffer(houseID).replace(',', '.');
+		house.setOfferState(true);
+		house.setOffer(Double.parseDouble(offer));
+		houseService.addHouse(house);
+		return "redirect:/users/houses/" + id;
+	}
+	
+	@GetMapping("/users/houses/{id}/{houseID}/offer/deny")
+	public String denyOffer(@PathVariable Long id, @PathVariable Long houseID)
+	{
+		House house = houseService.getHouseById(id);
+		house.setOfferState(false);
+		houseService.addHouse(house);
+		return "redirect:/users/houses/" + id;
 	}
 	
 }
