@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insurance Management System</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+	crossorigin="anonymous">
+	<style type="text/css">
+		div.error{
+			color: red;
+		}
+	</style>
+</head>
+<body>
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Insurance Management System</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/users}">Customer Management</a>
+        </li>  
+      </ul>
+    </div>
+  </div>
+</nav>
+<br>
+	<div class="container">
+		<div class = "row">
+			<div class = "col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+				<h1 class = "text-center">Add A New House</h1>
+				<div class = "card-body">
+					<form th:action = "@{/users/houses/{id}/{houseID}(id=${user.id})}" th:object = "${good}" method="POST">
+						<div class = "form-group">
+							<label>Category</label>
+							<input 
+							type = "text"
+							name = "category"
+							th:field = "*{category}"
+							id="category"
+							class = "form-control"
+							placeholder="Enter A Category"
+							/>
+						</div>
+						
+						<div class = "form-group">
+							<label>Model</label>
+							<input 
+							type = "text"
+							name = "brand"
+							th:field = "*{brand}"
+							id="brand"
+							class = "form-control"
+							placeholder="Enter A Brand"
+							/>
+						</div>
+						
+						<div class = "form-group">
+							<label>Model</label>
+							<input 
+							type = "text"
+							name = "model"
+							th:field = "*{model}"
+							id="model"
+							class = "form-control"
+							placeholder="Enter A Model"
+							/>
+						</div>		
+						
+						<div class = "form-group">
+							<label>Model Year</label>
+							<input 
+							type = "text"
+							name = "year"
+							th:field = "*{year}"
+							id="year"
+							class = "form-control"
+							placeholder="Enter The Model Year"
+							/>
+						</div>
+						
+						<div class = "form-group">
+							<label>Current Price</label>
+							<input 
+							type = "text"
+							name = "price"
+							th:field = "*{price}"
+							id="rpice"
+							class = "form-control"
+							placeholder="Enter The Current Price"
+							/>
+						</div>
+						
+						
+						
+						
+						
+						<div class = "box-footer">
+							<button type = "submit" class = "btn btn-primary">
+								Submit
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
