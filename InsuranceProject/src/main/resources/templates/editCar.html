@@ -38,7 +38,7 @@
 		<div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
 			<h1 class = "text-center">Update The Car</h1>
 				<div class = "card-body">
-					<form th:action="@{/users/cars/{id}/edit/{carID}(id=${user.id}, carID=${car.id})}" th:object="${car}" method="POST">
+					<form th:action="@{/users/{id}/cars/edit/{carID}(id=${user.id}, carID=${car.id})}" th:object="${car}" method="POST">
 						<div class="form-group">
 							<label>Car Brand</label>
 							<input

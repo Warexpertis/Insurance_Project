@@ -61,10 +61,10 @@
 		 				<a th:href = "@{/users/edit/{id}(id=${user.id})}"
 		 				class = "btn btn-primary">Update</a>
 		 				
-		 				<a th:href = "@{/users/{id}/deactivate(id=${user.id})}"
+		 				<a th:href = "@{/users/deactivate/{id}(id=${user.id})}"
 		 				class = "btn btn-danger">Delete</a>
 		 				
-		 				<a th:href = "@{/users/assets/{id}(id=${user.id})}"
+		 				<a th:href = "@{/users/{id}/assets(id=${user.id})}"
 		 				class="btn btn-info">Customer Assets</a>
 		 			</td>
 		 		</tr>

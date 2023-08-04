@@ -55,11 +55,11 @@
 				<td th:text="${car.mileage}"></td>
 				<td th:text="${car.carPrice}"></td>
 				<td>
-					<a th:href="@{/users/cars/{id}/edit/{carID}(id=${user.id}, carID=${car.id})}"
+					<a th:href="@{/users/{id}/cars/edit/{carID}(id=${user.id}, carID=${car.id})}"
 					class = "btn btn-primary">Update</a>
-					<a th:href="@{/users/cars/{id}/{carIdx}+{carID}(id=${user.id}, carIdx=${carStat.index}, carID=${car.id})}"
+					<a th:href="@{/users/{id}/cars/{carIdx}+{carID}(id=${user.id}, carIdx=${carStat.index}, carID=${car.id})}"
 					class = "btn btn-danger">Delete</a>
-					<a th:href="@{/users/cars/{id}/{carID}/traffic_insurance(id=${user.id}, carID=${car.id})}"
+					<a th:href="@{/users/{id}/cars/{carID}/traffic_insurance(id=${user.id}, carID=${car.id})}"
 					class="btn btn-warning">Traffic Insurance</a>
 				</td>
 			</tr>
@@ -69,7 +69,7 @@
 	
 	<div class="row">
 		<div class="col-lg-3">
-			<a th:href="@{/users/cars/{id}/new(id=${user.id})}" class="btn btn-primary btn-sm mb-3">Add A New Car</a>
+			<a th:href="@{/users/{id}/cars/new(id=${user.id})}" class="btn btn-primary btn-sm mb-3">Add A New Car</a>
 		</div>
 	</div>
 	

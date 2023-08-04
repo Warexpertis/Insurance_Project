@@ -33,10 +33,10 @@
 		<div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
 			<h4 th:text="${cust.name} + ' ' + ${cust.surname}" class="text-center"></h4>
 			<br>
-			<form th:action="@{/users/cars}" method="get" class="text-center">
-			<a th:href="@{/users/cars/{id}(id=${cust.id})}"
+			<form method="get" class="text-center">
+			<a th:href="@{/users/{id}/cars(id=${cust.id})}"
 			class = "btn btn-secondary">Vehicles</a>
-			<a th:href="@{/users/houses/{id}(id=${cust.id})}" 
+			<a th:href="@{/users/{id}/houses(id=${cust.id})}" 
 			class = "btn btn-secondary">Houses</a>
 			</form>
 			<br>

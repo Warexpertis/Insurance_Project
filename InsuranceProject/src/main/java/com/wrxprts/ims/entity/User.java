@@ -3,6 +3,8 @@ package com.wrxprts.ims.entity;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -199,7 +201,7 @@ public class User
 	
 	public List<Car> getCars()
 	{
-		return cars;
+		return cars.stream().filter(Car::isActive).collect(Collectors.toList());
 	}
 	
 	public void setCars(List<Car> cars)
@@ -215,6 +217,23 @@ public class User
 	public void setHouses(List<House> houses)
 	{
 		this.houses = houses;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+	    if (this == obj) {
+	        return true;
+	    }
+	    if (obj == null || getClass() != obj.getClass()) {
+	        return false;
+	    }
+	    User user = (User) obj;
+	    return Objects.equals(id, user.id);
+	}
+
+	@Override
+	public int hashCode() {
+	    return Objects.hash(id);
 	}
 	
 }

@@ -1,5 +1,7 @@
 package com.wrxprts.ims.entity;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -32,7 +34,7 @@ public class Car
 	private String motorType;
 	
 	@Min(1990)
-	private Short year;
+	private short year;
 	
 	@PositiveOrZero
 	private int mileage;
@@ -40,12 +42,16 @@ public class Car
 	@Positive
 	private int carPrice;
 	
-	private boolean offerState = false;
+	private boolean offerState;
 	
 	private double offer;
 	
+	private LocalDate offerDate;
+	
+	private boolean active = true;
+	
 	@ManyToOne
-	@JoinColumn(name = "user_id", nullable = true)
+	@JoinColumn(name = "user_id")
 	private User user;
 	
 	public Car()
@@ -54,7 +60,7 @@ public class Car
 	}
 	
 	public Car(String brand, String model, String motorType, Short year, int mileage, int carPrice,
-			boolean offerState, int offer, User user)
+			boolean offerState, int offer, LocalDate offerDate, boolean active, User user)
 	{
 		super();
 		this.brand = brand;
@@ -65,6 +71,8 @@ public class Car
 		this.carPrice = carPrice;
 		this.offerState = offerState;
 		this.offer = offer;
+		this.offerDate = offerDate;
+		this.active = active;
 		this.user = user;
 	}
 	
@@ -156,6 +164,26 @@ public class Car
 	public void setOffer(double offer)
 	{
 		this.offer = offer;
+	}
+	
+	public LocalDate getOfferDate()
+	{
+		return offerDate;
+	}
+	
+	public void setOfferDate(LocalDate offerDate)
+	{
+		this.offerDate = offerDate;
+	}
+	
+	public boolean isActive()
+	{
+		return active;
+	}
+	
+	public void setActive(boolean active)
+	{
+		this.active = active;
 	}
 	
 	public User getUser()

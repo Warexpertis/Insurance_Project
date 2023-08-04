@@ -55,6 +55,7 @@ public class HouseController
 	public String saveHouse(@PathVariable Long id, @Valid @ModelAttribute("house") House house,
 			BindingResult bindingResult, @ModelAttribute("user") User user)
 	{
+		house.setId(null);
 		if (bindingResult.hasErrors())
 			return "addHouse";
 		house.setUser(user);

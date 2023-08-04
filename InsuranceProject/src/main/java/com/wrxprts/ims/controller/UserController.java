@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import java.util.List;
 
+import com.wrxprts.ims.entity.Car;
 import com.wrxprts.ims.entity.User;
 import com.wrxprts.ims.service.UserService;
 import com.wrxprts.ims.web.dto.UserDto;
@@ -57,11 +59,13 @@ public class UserController
 	}
 	
 	// Handler method to handle delete user request
-	@GetMapping("/users/{id}/deactivate")
+	@GetMapping("/users/deactivate/{id}")
 	public String deleteUser(@PathVariable Long id)
 	{
 		User user = userService.getUserById(id);
 		user.setActive(false);
+		List<Car> cars=user.getCars();
+		for(Car car:cars) car.setActive(false);
 		userService.saveUser(user);
 		return "redirect:/users";
 	}
@@ -120,7 +124,7 @@ public class UserController
 		return "redirect:/users";
 	}
 	
-	@GetMapping("/users/assets/{id}")
+	@GetMapping("/users/{id}/assets")
 	public String custAssetsForm(@PathVariable Long id, Model model)
 	{
 		User cust = userService.getUserById(id);

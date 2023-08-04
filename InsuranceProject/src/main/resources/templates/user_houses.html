@@ -68,8 +68,8 @@
 					<a th:href="@{/users/houses/{id}/{houseIdx}+{houseID}(id=${user.id}, houseIdx=${houseStat.index}, houseID=${house.id})}"
 					class = "btn btn-danger">Delete</a>
 					<a th:href="@{/users/houses/{id}/{houseID}/housing_insurance(id=${user.id}, houseID=${house.id})}"
-					class="btn btn-warning">Housing Insurance</a>
-					<a 
+					class="btn btn-warning">DASK Insurance</a>
+					<a th:href="@{/users/houses/{id}/{houseID}(id=${user.id}, houseID=${house.id})}"
 					class="btn btn-info">Household Goods</a>
 				</td>
 			</tr>

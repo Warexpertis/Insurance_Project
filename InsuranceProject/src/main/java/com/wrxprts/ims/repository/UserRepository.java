@@ -17,6 +17,8 @@ public interface UserRepository extends JpaRepository<User, Long>
 	
 	Optional<User> findByTc(String tc);
 	
+	List<User> findByEmailIn(List<String> emails);
+	
 	Optional<User> findByNameAndSurnameAndBirthDateAndProvince(String name, String surname, Date b_date,
 			String province);
 }

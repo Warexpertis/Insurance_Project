@@ -1,5 +1,9 @@
 package com.wrxprts.ims.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -7,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -56,9 +61,14 @@ public class House
 	
 	private boolean offerState = false;
 	
+	private boolean active = true;
+	
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = true)
 	private User user;
+	
+	@OneToMany(mappedBy = "house", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	private List<HouseholdGood> goods = new ArrayList<>();
 	
 	public House()
 	{
@@ -67,7 +77,7 @@ public class House
 	
 	public House(String province, String district, String neighborhood, String aveORstrt, String buildingNo,
 			String flatNo, byte floor, int size, short year, int housePrice, double offer,
-			boolean offerState, User user)
+			boolean offerState, boolean active, User user, List<HouseholdGood> goods)
 	{
 		super();
 		this.province = province;
@@ -82,7 +92,9 @@ public class House
 		this.housePrice = housePrice;
 		this.offer = offer;
 		this.offerState = offerState;
+		this.active = active;
 		this.user = user;
+		this.goods = goods;
 	}
 	
 	public Long getId()
@@ -215,6 +227,16 @@ public class House
 		this.offerState = offerState;
 	}
 	
+	public boolean isActive()
+	{
+		return active;
+	}
+	
+	public void setActive(boolean active)
+	{
+		this.active = active;
+	}
+	
 	public User getUser()
 	{
 		return user;
@@ -223,6 +245,16 @@ public class House
 	public void setUser(User user)
 	{
 		this.user = user;
+	}
+	
+	public List<HouseholdGood> getGoods()
+	{
+		return goods;
+	}
+	
+	public void setGoods(List<HouseholdGood> goods)
+	{
+		this.goods = goods;
 	}
 	
 }
